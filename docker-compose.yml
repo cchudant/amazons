@@ -9,7 +9,7 @@ services:
         REACT_APP_API_URL: ${API_URL}
     restart: always
     ports:
-      - '8080:8080'
+      - '${FRONT_PORT}:8080'
 
   # server
   server:
@@ -23,4 +23,4 @@ services:
       MODE: PRODUCTION
     restart: always
     ports:
-      - '3000:3000'
+      - '${API_PORT}:3000'
