@@ -1,5 +1,8 @@
 FROM node:14
 
+ARG API_URL
+ENV REACT_APP_API_URL $API_URL
+
 WORKDIR /app
 
 COPY ./front/package.json ./front/package.json

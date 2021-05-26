@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./client.dockerfile
-      environment: 
+      args: 
         REACT_APP_API_URL: ${API_URL}
     restart: always
     ports:
