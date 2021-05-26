@@ -279,7 +279,7 @@ function CreateGame() {
 function App() {
   return (
     <SocketIOProvider
-      url={`http://${process.env.REACT_APP_API_URL}/game`}
+      url={`${process.env.REACT_APP_API_URL}/game`}
       opts={{
         transports: ['websocket'],
       }}
