@@ -27,4 +27,4 @@ RUN rm -rf ./front/tsconfig.json
 
 WORKDIR /app/front
 
-CMD bash -c "serve -s dist -l 8080"
+CMD bash -c "serve -s build -l 8080"
