@@ -104,7 +104,7 @@ function AmazonsBoard({
     const isValidPos = (x: number, y: number) => {
       if (x < 0 || x >= gameState.width || y < 0 || y >= gameState.height)
         return false
-      if (x === loc.x || y === loc.y) return false
+      if (x === loc.x && y === loc.y) return false
       if (entities.some((ent) => ent.x === x && ent.y === y)) return false
       return true
     }
