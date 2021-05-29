@@ -62,7 +62,7 @@ function AmazonsBoard({
 
   const gameState = useLastSocketMessage('gameState', initialState)
 
-  const entities: BoardEntity[] = gameState.entities.map((ent) => ({
+  const entities: BoardEntity[] = gameState.entities.map(ent => ({
     x: ent.x,
     y: ent.y,
     sprite: ent.color === Color.Black ? blackDragonSprite : whiteDragonSprite,
@@ -74,7 +74,7 @@ function AmazonsBoard({
   }))
 
   entities.push(
-    ...gameState.fires.map((fire) => ({
+    ...gameState.fires.map(fire => ({
       x: fire.x,
       y: fire.y,
       sprite: fireSprite,
@@ -84,7 +84,7 @@ function AmazonsBoard({
   function moveCurrentPiece(loc: BoardDot) {
     const copyEntities = [...gameState.entities]
     const ind = gameState.entities.findIndex(
-      (e) => e.x === selectedPiece?.x && e.y === selectedPiece?.y
+      e => e.x === selectedPiece?.x && e.y === selectedPiece?.y
     )
     copyEntities[ind] = { ...gameState.entities[ind], x: loc.x, y: loc.y }
 
@@ -105,11 +105,11 @@ function AmazonsBoard({
       if (x < 0 || x >= gameState.width || y < 0 || y >= gameState.height)
         return false
       if (x === loc.x && y === loc.y) return false
-      if (entities.some((ent) => ent.x === x && ent.y === y)) return false
+      if (entities.some(ent => ent.x === x && ent.y === y)) return false
       return true
     }
 
-    const canMove = gameState.entities.some((ent) => {
+    const canMove = gameState.entities.some(ent => {
       if (ent.color !== turn) return false
       if (isValidPos(ent.x + 1, ent.y)) return true
       if (isValidPos(ent.x - 1, ent.y)) return true
@@ -144,7 +144,7 @@ function AmazonsBoard({
           x >= gameState.width ||
           y < 0 ||
           y >= gameState.height ||
-          entities.some((e) => e.x === x && e.y === y)
+          entities.some(e => e.x === x && e.y === y)
         )
           break
 
@@ -155,14 +155,14 @@ function AmazonsBoard({
         })
       }
     }
-    traceLine((d) => [selectedPiece.x + d, selectedPiece.y])
-    traceLine((d) => [selectedPiece.x - d, selectedPiece.y])
-    traceLine((d) => [selectedPiece.x, selectedPiece.y + d])
-    traceLine((d) => [selectedPiece.x, selectedPiece.y - d])
-    traceLine((d) => [selectedPiece.x + d, selectedPiece.y + d])
-    traceLine((d) => [selectedPiece.x - d, selectedPiece.y + d])
-    traceLine((d) => [selectedPiece.x + d, selectedPiece.y - d])
-    traceLine((d) => [selectedPiece.x - d, selectedPiece.y - d])
+    traceLine(d => [selectedPiece.x + d, selectedPiece.y])
+    traceLine(d => [selectedPiece.x - d, selectedPiece.y])
+    traceLine(d => [selectedPiece.x, selectedPiece.y + d])
+    traceLine(d => [selectedPiece.x, selectedPiece.y - d])
+    traceLine(d => [selectedPiece.x + d, selectedPiece.y + d])
+    traceLine(d => [selectedPiece.x - d, selectedPiece.y + d])
+    traceLine(d => [selectedPiece.x + d, selectedPiece.y - d])
+    traceLine(d => [selectedPiece.x - d, selectedPiece.y - d])
   }
 
   useEffect(() => {
@@ -185,7 +185,7 @@ function AmazonsBoard({
           ev.stopPropagation()
           if (gameState.turn !== myColor || gameState.end) return
           const ent = gameState.entities.find(
-            (ent) => ent.x === entity.x && ent.y === entity.y
+            ent => ent.x === entity.x && ent.y === entity.y
           )
           if (!ent || ent.color !== myColor || selectedPiece?.moved) return
           if (
@@ -256,12 +256,12 @@ function CreateGame() {
   const history = useHistory()
   const [creating, setCreating] = useState(false)
 
-  const newGame = () => {
+  const newGame = (mapN: number) => {
     if (creating) return
     setCreating(true)
 
     console.log(socket)
-    socket.emit('newGame')
+    socket.emit('newGame', mapN)
     socket.once('newGame', (gameId: string) => {
       history.push(`/${gameId}`)
     })
@@ -269,8 +269,11 @@ function CreateGame() {
 
   return (
     <div>
-      <button disabled={creating} onClick={newGame}>
-        New Game
+      <button disabled={creating} onClick={() => newGame(0)}>
+        Map 1
+      </button>
+      <button disabled={creating} onClick={() => newGame(1)}>
+        Map 2
       </button>
     </div>
   )

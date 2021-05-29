@@ -22,8 +22,9 @@ export class GameGateway {
   @SubscribeMessage('newGame')
   newGame(
     @ConnectedSocket() client: Socket,
+    @MessageBody() map: number,
   ) {
-    const ret = this.appService.createGameId()
+    const ret = this.appService.createGameId(map)
     console.log('Emit', client.id, 'newGame', ret)
     client.emit('newGame', ret)
   }

@@ -25,28 +25,48 @@ export interface GameState {
   players: number
 }
 
-const getDefaultStart: () => GameState = () => ({
-  width: 6,
-  height: 6,
-  entities: [
-    { color: Color.Black, x: 3, y: 0 },
-    { color: Color.White, x: 0, y: 2 },
-    { color: Color.Black, x: 2, y: 5 },
-    { color: Color.White, x: 5, y: 3 },
-  ],
-  fires: [],
-  turn: Math.random() < 0.5 ? Color.White : Color.Black,
-  players: 0,
-  end: false,
-})
+const defaultStarts: Array<() => GameState> = [
+  () => ({
+    width: 6,
+    height: 6,
+    entities: [
+      { color: Color.Black, x: 3, y: 0 },
+      { color: Color.White, x: 0, y: 2 },
+      { color: Color.Black, x: 2, y: 5 },
+      { color: Color.White, x: 5, y: 3 },
+    ],
+    fires: [],
+    turn: Math.random() < 0.5 ? Color.White : Color.Black,
+    players: 0,
+    end: false,
+  }),
+  () => ({
+    width: 8,
+    height: 8,
+    entities: [
+      { color: Color.Black, x: 2, y: 0 },
+      { color: Color.Black, x: 5, y: 0 },
+      { color: Color.Black, x: 2, y: 7 },
+      { color: Color.Black, x: 5, y: 7 },
+      { color: Color.White, x: 0, y: 2 },
+      { color: Color.White, x: 0, y: 5 },
+      { color: Color.White, x: 7, y: 2 },
+      { color: Color.White, x: 7, y: 5 },
+    ],
+    fires: [],
+    turn: Math.random() < 0.5 ? Color.White : Color.Black,
+    players: 0,
+    end: false,
+  }),
+]
 
 @Injectable()
 export class AppService {
   private games = new Map<string, GameState>()
 
-  public createGameId(): string {
+  public createGameId(map: number): string {
     const gameId = randomBytes(8).toString('hex')
-    this.games.set(gameId, getDefaultStart())
+    const state = this.games.set(gameId, getDefaultStart())
     return gameId
   }
 
