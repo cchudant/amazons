@@ -66,7 +66,7 @@ export class AppService {
 
   public createGameId(map: number): string {
     const gameId = randomBytes(8).toString('hex')
-    const state = this.games.set(gameId, getDefaultStart())
+    const state = this.games.set(gameId, defaultStarts[map]())
     return gameId
   }
 
