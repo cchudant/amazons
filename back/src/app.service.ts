@@ -58,6 +58,28 @@ const defaultStarts: Array<() => GameState> = [
     players: 0,
     end: false,
   }),
+  () => ({
+    width: 8,
+    height: 8,
+    entities: [
+      { color: Color.Black, x: 2, y: 0 },
+      { color: Color.Black, x: 5, y: 0 },
+      { color: Color.Black, x: 2, y: 7 },
+      { color: Color.Black, x: 5, y: 7 },
+      { color: Color.White, x: 0, y: 2 },
+      { color: Color.White, x: 0, y: 5 },
+      { color: Color.White, x: 7, y: 2 },
+      { color: Color.White, x: 7, y: 5 },
+      { color: Color.Black, x: 3, y: 3 },
+      { color: Color.White, x: 4, y: 3 },
+      { color: Color.White, x: 3, y: 4 },
+      { color: Color.Black, x: 4, y: 4 },
+    ],
+    fires: [],
+    turn: Math.random() < 0.5 ? Color.White : Color.Black,
+    players: 0,
+    end: false,
+  })
 ]
 
 @Injectable()

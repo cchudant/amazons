@@ -275,6 +275,9 @@ function CreateGame() {
       <button disabled={creating} onClick={() => newGame(1)}>
         Map 2
       </button>
+      <button disabled={creating} onClick={() => newGame(2)}>
+        Map 3
+      </button>
     </div>
   )
 }
